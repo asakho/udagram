@@ -15,7 +15,7 @@ Clone of instagram called UDAGRAM by creating the infrastructure and deploy the 
 
   
 
--  [Installing](#install)
+-  [Installing infra](#install)
 
 -  [Deployment of the application](#deployment)
 
