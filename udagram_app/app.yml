@@ -32,39 +32,39 @@ Resources:
         CidrIp: 0.0.0.0/0
 
   WebServerSecGroup:
-      Type: AWS::EC2::SecurityGroup
-      Properties: 
-          GroupDescription: Allow http to our hosts and SSH from local only
-          VpcId:
-            Fn::ImportValue: !Sub "${EnvironmentName}-VPCID" 
-          SecurityGroupIngress: 
-          - IpProtocol: tcp # Ingress: HTTP access
-            FromPort: 80
-            ToPort: 80
-            CidrIp: 0.0.0.0/0
-          - IpProtocol: tcp  # Ingress: SSH access
-            FromPort: 22
-            ToPort: 22
-            CidrIp: 0.0.0.0/0
-          SecurityGroupEgress: 
-          - IpProtocol: tcp # Egress: open ports
-            FromPort: 0
-            ToPort: 65535
-            CidrIp: 0.0.0.0/0
+    Type: AWS::EC2::SecurityGroup
+    Properties: 
+      GroupDescription: Allow http to our hosts and SSH from local only
+      VpcId:
+        Fn::ImportValue: !Sub "${EnvironmentName}-VPCID" 
+      SecurityGroupIngress: 
+      - IpProtocol: tcp # Ingress: HTTP access
+        FromPort: 80
+        ToPort: 80
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp  # Ingress: SSH access
+        FromPort: 22
+        ToPort: 22
+        CidrIp: 0.0.0.0/0
+      SecurityGroupEgress: 
+      - IpProtocol: tcp # Egress: open ports
+        FromPort: 0
+        ToPort: 65535
+        CidrIp: 0.0.0.0/0
 
   WebAppTargetGroup:
-        Type: AWS::ElasticLoadBalancingV2::TargetGroup
-        Properties:
-          HealthCheckIntervalSeconds: 50
-          HealthCheckPath: /
-          HealthCheckProtocol: HTTP
-          HealthCheckTimeoutSeconds: 30
-          HealthyThresholdCount: 2
-          Port: 80
-          Protocol: HTTP
-          UnhealthyThresholdCount: 5
-          VpcId:
-            Fn::ImportValue: !Sub "${EnvironmentName}-VPCID" 
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      HealthCheckIntervalSeconds: 50
+      HealthCheckPath: /
+      HealthCheckProtocol: HTTP
+      HealthCheckTimeoutSeconds: 30
+      HealthyThresholdCount: 2
+      Port: 80
+      Protocol: HTTP
+      UnhealthyThresholdCount: 5
+      VpcId:
+        Fn::ImportValue: !Sub "${EnvironmentName}-VPCID" 
 
   WebAppLaunchConfig: # user data to install web server
     Type: AWS::AutoScaling::LaunchConfiguration
@@ -87,7 +87,7 @@ Resources:
       BlockDeviceMappings:
       - DeviceName: "/dev/sdk"
         Ebs:
-          VolumeSize: '10'
+          VolumeSize: 10
 
   EC2Role:
     Type: AWS::IAM::Role
@@ -156,7 +156,7 @@ Resources:
           Ref: WebAppTargetGroup
       LoadBalancerArn:
         Ref: WebAppLB 
-      Port: '80'
+      Port: 80
       Protocol: HTTP
 
   ALBListenerRule:
